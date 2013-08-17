@@ -26,7 +26,6 @@ public class PrisonBreakView extends View {
 	public static final int BRICK_ROW = 10;
 	public static final int BRICK_COL = 19;
 	public static final int STATUS_BAR_HEIGHT = 50;
-
 	
 	// 最大リフレッシュレート
 	private static final long DELAY_MILLIS = 1000 / 60;
