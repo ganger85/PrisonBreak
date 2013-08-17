@@ -11,4 +11,5 @@ public interface ActiveObject {
 	 void update();
 	 void draw(Canvas canvas, Paint paint);
 	 Rect getRect();
+	//‘¼‚Ìl‚Ì•ÒW
 }
