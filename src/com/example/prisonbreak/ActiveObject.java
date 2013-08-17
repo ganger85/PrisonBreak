@@ -12,4 +12,5 @@ public interface ActiveObject {
 	 void draw(Canvas canvas, Paint paint);
      Rect getRect();
      //©•ª‚Ì•ÒW
+     //‘¼‚Ìl‚Ì•ÒW
 }
