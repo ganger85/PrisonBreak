@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PrisonBreak</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="ball">ball:0</string>
+	<string name="ready_message">スタート！！</string>
+	<string name="pause_message">Pause</string>
+	<string name="game_over_message">残念！！</string>
+	<string name="game_clear_message">クリア！！</string>
+	<string name="new_ball_help">画面タップで新しいボールが出るよ</string>
+	<string name="stock_ball_count">残りのボール：</string>
+
+</resources>
