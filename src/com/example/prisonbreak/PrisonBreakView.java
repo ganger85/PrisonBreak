@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+
 public class PrisonBreakView extends View {
 
 	private int mMode = READY;
