@@ -7,11 +7,10 @@ import android.graphics.Rect;
 
 public class Ball implements ActiveObject {
 
-	private int mScreenWide;
-
-	// ボールサイズ
-	private int size = 16;
-	private int statusBarHeight ;
+	private int diameter = 16;
+	private int color = Color.WHITE;
+	
+	private int screenWidth;
 
 	// ボールの四隅（衝突判定に利用する）
 	public static final int LEFT_TOP = 0;
@@ -20,22 +19,38 @@ public class Ball implements ActiveObject {
 	public static final int RIGHT_DOWN = 3;
 
 	// ボールスピード
-	public float xSpeed;
+	private float xSpeed;
 	private float ySpeed;
-	public float maxYSpeed = 8f;
-	public float maxXSpeed = 3f;
+	private float maxYSpeed = 8f;
+	private float maxXSpeed = 3f;
 
 	// ボールの現在情報
-	public float positionX;
+	private float positionX;
 	private float positionY;
-	public float acceleration = 0.15f;
+//	private float acceleration = 0.15f;
 	
-	public int getSize() {
-		return size;
+	public int getDiameter() {
+		return diameter;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
+	public void setDiameter(int diameter) {
+		this.diameter = diameter;
+	}
+	
+	public float getxSpeed() {
+		return xSpeed;
+	}
+
+	public float getMaxYSpeed() {
+		return maxYSpeed;
+	}
+
+	public void setMaxYSpeed(float maxYSpeed) {
+		this.maxYSpeed = maxYSpeed;
+	}
+	
+	public float getPositionX() {
+		return positionX;
 	}
 	
 	public float getPositionY() {
@@ -45,26 +60,25 @@ public class Ball implements ActiveObject {
 	public float getySpeed() {
 		return ySpeed;
 	}
-
-	public Ball(float x, float y, float xSpeed, float ySpeed, int w, int h) {
+	
+	public Ball(float x, float y, float xSpeed, float ySpeed, int screenWidth) {
 		this.positionX = x;
 		this.positionY = y;
 		this.xSpeed = xSpeed;
 		this.ySpeed = ySpeed;
-		this.mScreenWide = w;
-		this.statusBarHeight = PrisonBreakView.STATUS_BAR_HEIGHT;
+		this.screenWidth = screenWidth;
 	}
 
 	public float getlx() {
-		return positionX + size;
+		return positionX + diameter;
 	}
 
 	public float getcx() {
-		return positionX + size / 2;
+		return positionX + diameter / 2;
 	}
 
 	public float getly() {
-		return positionY + size;
+		return positionY + diameter;
 	}
 
 	/*
@@ -115,16 +129,16 @@ public class Ball implements ActiveObject {
 			xSpeed = getNewSpeed(xSpeed, maxXSpeed);
 		} else {
 			float lx = getlx();
-			if (lx + xSpeed >= mScreenWide) {
-				positionX = getAfterCrashPoint(xSpeed, lx, mScreenWide) - size;
+			if (lx + xSpeed >= screenWidth) {
+				positionX = getAfterCrashPoint(xSpeed, lx, screenWidth) - diameter;
 				xSpeed *= -1.01f;
 				xSpeed = getNewSpeed(xSpeed, maxXSpeed);
 			} else {
 				positionX += xSpeed;
 			}
 		}
-		if (positionY + ySpeed <= statusBarHeight) {
-			positionY = getAfterCrashPoint(ySpeed, positionY, statusBarHeight);
+		if (positionY + ySpeed <= PrisonBreakView.STATUS_BAR_HEIGHT) {
+			positionY = getAfterCrashPoint(ySpeed, positionY, PrisonBreakView.STATUS_BAR_HEIGHT);
 			ySpeed *= -0.9f;
 			ySpeed = getNewSpeed(ySpeed, maxYSpeed);
 		} else {
@@ -134,28 +148,28 @@ public class Ball implements ActiveObject {
 
 	@Override
 	public void draw(Canvas canvas, Paint paint) {
-		paint.setColor(Color.WHITE);
+		paint.setColor(color);
 		paint.setAntiAlias(true);
-		int radius = size / 2;
+		int radius = diameter / 2;
 		canvas.drawCircle(positionX + radius, positionY + radius, radius, paint);
 	}
 
-	public void topCrash(int index) {
+	public void topCrash() {
 		positionY += ySpeed;
 		ySpeed = Math.abs(ySpeed);
 	}
 
-	public void downCrash(int index) {
+	public void downCrash() {
 		positionY += ySpeed;
 		ySpeed = -Math.abs(ySpeed);
 	}
 
-	public void leftCrash(int index) {
+	public void leftCrash() {
 		positionX += xSpeed;
 		xSpeed = Math.abs(xSpeed);
 	}
 
-	public void rightCrash(int index) {
+	public void rightCrash() {
 		positionX += xSpeed;
 		xSpeed = -Math.abs(xSpeed);
 	}

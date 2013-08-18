@@ -28,8 +28,6 @@ public class PrisonBreakView extends View {
 	public static final int BRICK_COL = 19;
 	public static final int STATUS_BAR_HEIGHT = 50;
 	
-	
-	
 	// 最大リフレッシュレート
 	private static final long DELAY_MILLIS = 1000 / 60;
 
@@ -168,7 +166,7 @@ public class PrisonBreakView extends View {
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		mPad = new Pad(w, h);
+		mPad = new Pad(w);
 		setMode(READY);
 	}
 
@@ -201,7 +199,7 @@ public class PrisonBreakView extends View {
 		//ボールのサイズを倍にするブロックに当たったので、ボールのサイズを倍にする
 		if (mBricks[xIndex][yIndex].getClass() == BlockBallBigger.class){
 			for (int i = 0; i < this.mBallsCount; i++) {
-				mBalls.get(i).setSize(mBalls.get(i).getSize() * 2);
+				mBalls.get(i).setDiameter(mBalls.get(i).getDiameter() * 2);
 			}
 		}
 		
@@ -237,7 +235,7 @@ public class PrisonBreakView extends View {
 				ball.update();
 				PrisonBreakView.this.invalidate(ball.getRect());
 
-				int xIndex = (int) (ball.positionX / Block.WIDE);
+				int xIndex = (int) (ball.getPositionX() / Block.WIDE);
 				int yIndex = (int) ((ball.getPositionY() - STATUS_BAR_HEIGHT) / Block.HEIGHT);
 				int lxIndex = (int) (ball.getlx() / Block.WIDE);
 				int lyIndex = (int) ((ball.getly() - STATUS_BAR_HEIGHT) / Block.HEIGHT);
@@ -264,24 +262,24 @@ public class PrisonBreakView extends View {
 				crashBlock(lxIndex, lyIndex);
 
 				if (yCrash > 0) {
-					ball.topCrash(yIndex);
+					ball.topCrash();
 				} else if (yCrash < 0) {
-					ball.downCrash(lyIndex);
+					ball.downCrash();
 				}
 				if (xCrash > 0) {
-					ball.leftCrash(xIndex);
+					ball.leftCrash();
 				} else if (xCrash < 0) {
-					ball.rightCrash(lxIndex);
+					ball.rightCrash();
 				}
 
-				if (mPad.y <= ball.getly()
+				if (mPad.getPositionY() <= ball.getly()
 						&& mPad.getly() >= ball.getPositionY()
-						&& mPad.x <= ball.getlx()
-						&& mPad.getlx() >= ball.positionX) { // ボールがパッドに当たった
+						&& mPad.getPositionX() <= ball.getlx()
+						&& mPad.getlx() >= ball.getPositionX()) { // ボールがパッドに当たった
 					float newXSpeed;
 					float newYSpeed;
 
-					newXSpeed = ball.xSpeed + (ball.getcx() - mPad.getcx()) / 5;
+					newXSpeed = ball.getxSpeed() + (ball.getcx() - mPad.getcx()) / 5;
 					newYSpeed = -(ball.getySpeed() - Math.abs(ball.getcx()
 							- mPad.getcx()) * 1.2f);
 					if (newYSpeed > -10) {
@@ -291,8 +289,8 @@ public class PrisonBreakView extends View {
 					ball.setXSpeed(newXSpeed);
 					ball.setYSpeed(newYSpeed);
 
-					if (ball.maxYSpeed < 15) {
-						ball.maxYSpeed += 0.1f;
+					if (ball.getMaxYSpeed() < 15) {
+						ball.setMaxYSpeed(ball.getMaxYSpeed() + 0.1f);
 					}
 				} else if (ball.getPositionY() > this.getHeight()) { // ボールが下に落ちた
 					this.mBalls.remove(i);
@@ -357,8 +355,7 @@ public class PrisonBreakView extends View {
 			if (mBallsCount == 0) {
 				mMessage.setVisibility(View.INVISIBLE);
 			}
-			mBalls.add(new Ball(this.getWidth() / 2, 300, -0.2f, -5, this
-					.getWidth(), this.getHeight()));
+			mBalls.add(new Ball(this.getWidth() / 2, 300, -0.2f, -5, this.getWidth()));
 			mBallsCount++;
 			mStockBallCount--;
 			Resources resource = getContext().getResources();
@@ -381,8 +378,7 @@ public class PrisonBreakView extends View {
 		int coordCount = rawArray.length;
 		for (int index = 0; index < coordCount; index += 4) {
 			Ball ball = new Ball(rawArray[index], rawArray[index + 1],
-					rawArray[index + 2], rawArray[index + 3], this.getWidth(),
-					this.getHeight());
+					rawArray[index + 2], rawArray[index + 3], this.getWidth());
 			balls.add(ball);
 		}
 		return balls;
@@ -401,9 +397,9 @@ public class PrisonBreakView extends View {
 		float[] rawArray = new float[count * 4];
 		for (int index = 0; index < count; index++) {
 			Ball setBall = (Ball) cvec.get(index);
-			rawArray[4 * index] = setBall.positionX;
+			rawArray[4 * index] = setBall.getPositionX();
 			rawArray[4 * index + 1] = setBall.getPositionY();
-			rawArray[4 * index + 2] = setBall.xSpeed;
+			rawArray[4 * index + 2] = setBall.getxSpeed();
 			rawArray[4 * index + 3] = setBall.getySpeed();
 		}
 		return rawArray;

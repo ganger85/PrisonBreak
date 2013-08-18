@@ -8,37 +8,47 @@ import android.view.MotionEvent;
 
 public class Pad implements ActiveObject {
 
-	private int mScreenWide = 100;
+	private int screenWide;
 
 	// PadÉTÉCÉY
 	public static final int HEIGHT = 10;
 	public static final int WIDE = 200;
 	public static final int WIDE_BLOCK = WIDE / 5;
 	public static final int HALF_WIDE = WIDE / 2;
+	
+	private int color = Color.YELLOW;
 
 	// PadÇÃåªç›èÓïÒ
-	public float x;
-	public float y;
+	private float positionX;
+	private float positionY = 1000;
 
-	public float mTouchX = 100;
+	public float mTouchX;
+	
+	public float getPositionX() {
+		return positionX;
+	}
+
+	public float getPositionY() {
+		return positionY;
+	}
 
 	public float getlx() {
-		return (x + WIDE);
+		return (positionX + WIDE);
 	}
 
 	public float getly() {
-		return (y + HEIGHT);
+		return (positionY + HEIGHT);
 	}
 	
 	public float getcx() {
-		return x + WIDE/2;
+		return positionX + WIDE/2;
 	}
 
 	public int colArea(float pointX) {
-		if (pointX < x) {
+		if (pointX < positionX) {
 			return 0;
 		} else {
-			return (int) (pointX - x) / WIDE_BLOCK + 1;
+			return (int) (pointX - positionX) / WIDE_BLOCK + 1;
 		}
 	}
 
@@ -48,33 +58,28 @@ public class Pad implements ActiveObject {
 		}
 	}
 
-	public Pad(int w, int h) {
-		mScreenWide = w;
-		y = 1000;
+	public Pad(int screenWidth) {
+		screenWide = screenWidth;
 	}
 
+	@Override
 	public void update() {
-		x = mTouchX - HALF_WIDE;
-		if (x < 0) {
-			x = 0;
-		} else if (getlx() > mScreenWide) {
-			x = mScreenWide - WIDE;
+		positionX = mTouchX - HALF_WIDE;
+		if (positionX < 0) {
+			positionX = 0;
+		} else if (getlx() > screenWide) {
+			positionX = screenWide - WIDE;
 		}
-	}
-
-	public void setSize(int w, int h) {
-		mScreenWide = w;
 	}
 
 	@Override
 	public void draw(Canvas canvas, Paint paint) {
-		paint.setColor(Color.YELLOW);
-		canvas.drawRect(x, y, x + WIDE, y + HEIGHT, paint);
+		paint.setColor(color);
+		canvas.drawRect(positionX, positionY, positionX + WIDE, positionY + HEIGHT, paint);
 	}
 
 	@Override
 	public Rect getRect() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
