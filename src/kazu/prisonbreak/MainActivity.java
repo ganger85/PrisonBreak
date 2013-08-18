@@ -1,4 +1,4 @@
-package com.example.prisonbreak;
+package kazu.prisonbreak;
 
 import android.os.Bundle;
 import android.app.Activity;

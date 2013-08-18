@@ -1,27 +1,27 @@
-package com.example.prisonbreak;
+package kazu.prisonbreak;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
 /**
- * 叩いても壊れないブロック
+ * ボールのサイズを2倍にするブロック
  */
-public class BlockUnClashable extends Block {
+public class BlockBallBigger extends Block {
 
-	public BlockUnClashable(int x, int y) {
+	public BlockBallBigger(int x, int y) {
 		super(x, y);
 	}
 
 	@Override
 	public void draw(Canvas canvas, Paint paint) {
-		paint.setColor(Color.GRAY);
+		paint.setColor(Color.YELLOW);
 		super.draw(canvas, paint);
 	}
 
 	@Override
 	public boolean isClashPossible() {
-		return false;
+		return true;
 	}
 
 }

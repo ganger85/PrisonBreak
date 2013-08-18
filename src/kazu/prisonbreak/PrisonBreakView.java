@@ -1,6 +1,8 @@
-package com.example.prisonbreak;
+package kazu.prisonbreak;
 
 import java.util.ArrayList;
+
+import kazu.prisonbreak.R;
 
 import android.content.Context;
 import android.content.res.Resources;

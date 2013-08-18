@@ -1,21 +1,21 @@
-package com.example.prisonbreak;
+package kazu.prisonbreak;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
 /**
- * 叩くとボールが増えるブロック
+ * 1度叩くと壊れるブロック
  */
-public class BlockAddBall extends Block {
+public class BlockNormal extends Block {
 
-	public BlockAddBall(int x, int y) {
+	public BlockNormal(int x, int y) {
 		super(x, y);
 	}
 
 	@Override
 	public void draw(Canvas canvas, Paint paint) {
-		paint.setColor(Color.BLUE);
+		paint.setColor(Color.RED);
 		super.draw(canvas, paint);
 	}
 

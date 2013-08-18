@@ -1,21 +1,21 @@
-package com.example.prisonbreak;
+package kazu.prisonbreak;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
 /**
- * ボールのサイズを2倍にするブロック
+ * 叩くとボールが増えるブロック
  */
-public class BlockBallBigger extends Block {
+public class BlockAddBall extends Block {
 
-	public BlockBallBigger(int x, int y) {
+	public BlockAddBall(int x, int y) {
 		super(x, y);
 	}
 
 	@Override
 	public void draw(Canvas canvas, Paint paint) {
-		paint.setColor(Color.YELLOW);
+		paint.setColor(Color.BLUE);
 		super.draw(canvas, paint);
 	}
 

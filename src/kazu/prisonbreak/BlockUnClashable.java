@@ -1,27 +1,27 @@
-package com.example.prisonbreak;
+package kazu.prisonbreak;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
 /**
- * 1度叩くと壊れるブロック
+ * 叩いても壊れないブロック
  */
-public class BlockNormal extends Block {
+public class BlockUnClashable extends Block {
 
-	public BlockNormal(int x, int y) {
+	public BlockUnClashable(int x, int y) {
 		super(x, y);
 	}
 
 	@Override
 	public void draw(Canvas canvas, Paint paint) {
-		paint.setColor(Color.RED);
+		paint.setColor(Color.GRAY);
 		super.draw(canvas, paint);
 	}
 
 	@Override
 	public boolean isClashPossible() {
-		return true;
+		return false;
 	}
 
 }
