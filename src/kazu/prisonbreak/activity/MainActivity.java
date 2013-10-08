@@ -1,5 +1,7 @@
-package kazu.prisonbreak;
+package kazu.prisonbreak.activity;
 
+import kazu.prisonbreak.R;
+import kazu.prisonbreak.view.PrisonBreakView;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.MotionEvent;

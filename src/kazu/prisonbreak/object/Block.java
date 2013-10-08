@@ -1,10 +1,11 @@
-package kazu.prisonbreak;
+package kazu.prisonbreak.object;
 
+import kazu.prisonbreak.view.PrisonBreakView;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-abstract class Block implements ActiveObject {
+public abstract class Block implements ActiveObject {
 
 	private int x;
 	private int y;

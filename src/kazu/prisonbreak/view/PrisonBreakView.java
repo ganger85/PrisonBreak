@@ -1,9 +1,15 @@
-package kazu.prisonbreak;
+package kazu.prisonbreak.view;
 
 import java.util.ArrayList;
 
 import kazu.prisonbreak.R;
-
+import kazu.prisonbreak.object.Ball;
+import kazu.prisonbreak.object.Block;
+import kazu.prisonbreak.object.BlockAddBall;
+import kazu.prisonbreak.object.BlockBallBigger;
+import kazu.prisonbreak.object.BlockNormal;
+import kazu.prisonbreak.object.BlockUnClashable;
+import kazu.prisonbreak.object.Pad;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;

@@ -1,4 +1,4 @@
-package kazu.prisonbreak;
+package kazu.prisonbreak.object;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
