@@ -30,6 +30,9 @@ public class PrisonBreakView extends View {
 	public static final int BRICK_COL = 19;
 	public static final int STATUS_BAR_HEIGHT = 50;
 	
+	//各ブロックの数
+	private int unClashableBallCount = 0;
+	
 	// 最大リフレッシュレート
 	private static final long DELAY_MILLIS = 1000 / 60;
 
@@ -78,6 +81,7 @@ public class PrisonBreakView extends View {
 				mBricksCount++;
 				if(i % 5 == 1 && j % 5 == 1){
 					mBricks[i][j] = new BlockUnClashable(i, j);
+					unClashableBallCount++;
 				} else if (i % 11 == 1 && j % 11 == 1){
 					mBricks[i][j] = new BlockAddBall(i, j);
 				} else if (i % 13 == 1 && j % 9 == 8){
@@ -208,7 +212,7 @@ public class PrisonBreakView extends View {
 		mBricks[xIndex][yIndex] = null;
 		mBricksCount--;
 		
-		if (mBricksCount <= 0) {
+		if ((mBricksCount - unClashableBallCount) <= 0) {
 			setMode(CLEAR);
 		}
 	}
