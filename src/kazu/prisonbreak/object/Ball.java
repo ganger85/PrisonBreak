@@ -138,8 +138,8 @@ public class Ball implements ActiveObject {
 				positionX += xSpeed;
 			}
 		}
-		if (positionY + ySpeed <= PrisonBreakView.STATUS_BAR_HEIGHT) {
-			positionY = getAfterCrashPoint(ySpeed, positionY, PrisonBreakView.STATUS_BAR_HEIGHT);
+		if (positionY + ySpeed <= PrisonBreakView.statusBarHeight) {
+			positionY = getAfterCrashPoint(ySpeed, positionY, PrisonBreakView.statusBarHeight);
 			ySpeed *= -0.9f;
 			ySpeed = getNewSpeed(ySpeed, maxYSpeed);
 		} else {

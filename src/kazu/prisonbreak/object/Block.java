@@ -1,5 +1,6 @@
 package kazu.prisonbreak.object;
 
+import kazu.prisonbreak.util.WindowInfo;
 import kazu.prisonbreak.view.PrisonBreakView;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -12,16 +13,23 @@ public abstract class Block implements ActiveObject {
 	private int lx;
 	private int ly;
 
-	public static final int HEIGHT = 20;
-	public static final int WIDE = 40;
+	public static int height ;
+	public static int width ;
+	
 
 	public Block(int x, int y) {
-		this.x = x * WIDE;
-		this.y = y * HEIGHT + PrisonBreakView.STATUS_BAR_HEIGHT;
-		this.ly = this.y + HEIGHT;
-		this.lx = this.x + WIDE;
+		this.x = x * width ;
+		this.y = y * height + PrisonBreakView.statusBarHeight;
+		this.lx = this.x + width ; 
+		this.ly = this.y + height;
 	}
-
+	
+	static {
+		WindowInfo windowInfo = WindowInfo.getInstance();
+		height = windowInfo.getWindowHeight() / 40;
+		width = windowInfo.getWindowWidth() /10 ;
+	}
+	
 	@Override
 	public void update() {
 

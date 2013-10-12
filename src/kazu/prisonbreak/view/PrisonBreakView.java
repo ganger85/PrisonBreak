@@ -10,6 +10,7 @@ import kazu.prisonbreak.object.BlockBallBigger;
 import kazu.prisonbreak.object.BlockNormal;
 import kazu.prisonbreak.object.BlockUnClashable;
 import kazu.prisonbreak.object.Pad;
+import kazu.prisonbreak.util.WindowInfo;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
@@ -25,16 +26,19 @@ import android.widget.TextView;
 
 
 public class PrisonBreakView extends View {
-
+	
 	private int mMode = READY;
 	public static final int PAUSE = 0; // 一時停止中
 	public static final int READY = 1; // スタート画面
 	public static final int RUNNING = 2;// 実行中
 	public static final int LOSE = 3; // ゲームオーバー
 	public static final int CLEAR = 4; // クリア
-	public static final int BRICK_ROW = 10;
-	public static final int BRICK_COL = 19;
-	public static final int STATUS_BAR_HEIGHT = 50;
+	public static final int BRICK_ROW = 8;
+	public static final int BRICK_COL = 10;
+	public static int statusBarHeight;
+	
+	//ウィンドウの高さに対するステータスバーの高さの割合
+	private static final int STATUS_BAR_HEIGHT_PERCENT = 20;
 	
 	//各ブロックの数
 	private int unClashableBallCount = 0;
@@ -66,7 +70,12 @@ public class PrisonBreakView extends View {
 		super(context, attrs, defStyle);
 		initialProcess();
 	}
-
+	
+	static {
+		WindowInfo windowInfo = WindowInfo.getInstance();
+		statusBarHeight = windowInfo.getWindowHeight() / STATUS_BAR_HEIGHT_PERCENT;
+	}
+	
 	/**
 	 * 初期処理
 	 */
@@ -88,9 +97,9 @@ public class PrisonBreakView extends View {
 				if(i % 5 == 1 && j % 5 == 1){
 					mBricks[i][j] = new BlockUnClashable(i, j);
 					unClashableBallCount++;
-				} else if (i % 11 == 1 && j % 11 == 1){
+				} else if (i % 5 == 3 && j % 5 == 3){
 					mBricks[i][j] = new BlockAddBall(i, j);
-				} else if (i % 13 == 1 && j % 9 == 8){
+				} else if (i % 7 == 4 && j % 7 == 6){
 					mBricks[i][j] = new BlockBallBigger(i, j);
 				} else{
 					mBricks[i][j] = new BlockNormal(i, j);
@@ -247,10 +256,10 @@ public class PrisonBreakView extends View {
 				ball.update();
 				PrisonBreakView.this.invalidate(ball.getRect());
 
-				int xIndex = (int) (ball.getPositionX() / Block.WIDE);
-				int yIndex = (int) ((ball.getPositionY() - STATUS_BAR_HEIGHT) / Block.HEIGHT);
-				int lxIndex = (int) (ball.getlx() / Block.WIDE);
-				int lyIndex = (int) ((ball.getly() - STATUS_BAR_HEIGHT) / Block.HEIGHT);
+				int xIndex = (int) (ball.getPositionX() / Block.width);
+				int yIndex = (int) ((ball.getPositionY() - statusBarHeight) / Block.height);
+				int lxIndex = (int) (ball.getlx() / Block.width);
+				int lyIndex = (int) ((ball.getly() - statusBarHeight) / Block.height);
 
 				if (isBlockCrash(xIndex, yIndex)) {
 					xCrash++;
@@ -336,7 +345,7 @@ public class PrisonBreakView extends View {
 
 		canvas.drawColor(Color.rgb(120, 140, 160));
 		mPaint.setColor(Color.BLACK);
-		canvas.drawRect(0, STATUS_BAR_HEIGHT, this.getWidth(),
+		canvas.drawRect(0, statusBarHeight, this.getWidth(),
 				this.getHeight(), mPaint);
 
 		mPad.draw(canvas, mPaint);

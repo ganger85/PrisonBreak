@@ -1,5 +1,6 @@
 package kazu.prisonbreak.object;
 
+import kazu.prisonbreak.util.WindowInfo;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,17 +13,23 @@ public class Pad implements ActiveObject {
 
 	// PadÉTÉCÉY
 	public static final int HEIGHT = 10;
-	public static final int WIDE = 200;
-	public static final int WIDE_BLOCK = WIDE / 5;
-	public static final int HALF_WIDE = WIDE / 2;
+	public static int width ;
+	public static final int WIDE_BLOCK = width / 5;
+	public static final int HALF_WIDE = width / 2;
 	
 	private int color = Color.YELLOW;
 
 	// PadÇÃåªç›èÓïÒ
 	private float positionX;
-	private float positionY = 1000;
+	private static float positionY ;
 
 	public float mTouchX;
+	
+	static {
+		WindowInfo windowInfo = WindowInfo.getInstance();
+		width = windowInfo.getWindowWidth() /5;
+		positionY = windowInfo.getWindowHeight() - windowInfo.getWindowHeight() / 6;
+	}
 	
 	public float getPositionX() {
 		return positionX;
@@ -33,7 +40,7 @@ public class Pad implements ActiveObject {
 	}
 
 	public float getlx() {
-		return (positionX + WIDE);
+		return (positionX + width);
 	}
 
 	public float getly() {
@@ -41,7 +48,7 @@ public class Pad implements ActiveObject {
 	}
 	
 	public float getcx() {
-		return positionX + WIDE/2;
+		return positionX + width/2;
 	}
 
 	public int colArea(float pointX) {
@@ -68,14 +75,14 @@ public class Pad implements ActiveObject {
 		if (positionX < 0) {
 			positionX = 0;
 		} else if (getlx() > screenWide) {
-			positionX = screenWide - WIDE;
+			positionX = screenWide - width;
 		}
 	}
 
 	@Override
 	public void draw(Canvas canvas, Paint paint) {
 		paint.setColor(color);
-		canvas.drawRect(positionX, positionY, positionX + WIDE, positionY + HEIGHT, paint);
+		canvas.drawRect(positionX, positionY, positionX + width, positionY + HEIGHT, paint);
 	}
 
 	@Override

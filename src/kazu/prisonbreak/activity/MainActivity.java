@@ -1,11 +1,15 @@
 package kazu.prisonbreak.activity;
 
 import kazu.prisonbreak.R;
+import kazu.prisonbreak.util.WindowInfo;
 import kazu.prisonbreak.view.PrisonBreakView;
 import android.os.Bundle;
 import android.app.Activity;
+import android.graphics.Point;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -16,6 +20,15 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
+		Display disp = wm.getDefaultDisplay();
+		Point size = new Point();
+		disp.getSize(size);
+		WindowInfo windowInfo = WindowInfo.getInstance();
+		windowInfo.setWindowWidth(size.x);
+		windowInfo.setWindowHeight(size.y);
+		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		prisonBreakView = (PrisonBreakView) findViewById(R.id.ball);
@@ -33,7 +46,7 @@ public class MainActivity extends Activity {
 			}
 		}
 	}
-
+	
 	@Override
 	protected void onPause() {
 		super.onPause();
